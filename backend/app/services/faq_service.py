@@ -1,24 +1,24 @@
-"""FAQ retrieval and semantic search service"""
+"""FAQ retrieval and semantic search service using pgvector"""
 
 from typing import List, Dict
 from sentence_transformers import SentenceTransformer
 import numpy as np
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 from app.models.faq import FAQ
 from app.config import settings
 
 
 class FAQService:
-    """Service for FAQ retrieval and semantic search"""
+    """Service for FAQ retrieval and semantic search with pgvector"""
     
     def __init__(self):
-        # Load a lightweight but effective embedding model
+        # Load a lightweight but effective embedding model (384 dimensions)
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
-        self.faq_cache = {}  # Cache FAQs and embeddings
     
     def get_relevant_faqs(self, query: str, db: Session, top_k: int = None) -> List[Dict]:
         """
-        Retrieve most relevant FAQs using semantic similarity
+        Retrieve most relevant FAQs using pgvector semantic similarity
         
         Args:
             query: User's question
@@ -31,68 +31,64 @@ class FAQService:
         if top_k is None:
             top_k = settings.TOP_K_FAQS
         
-        # Get all FAQs from database
-        faqs = db.query(FAQ).all()
-        
-        if not faqs:
-            return []
-        
-        # Generate embeddings if not cached
-        if not self.faq_cache:
-            self._build_faq_cache(faqs)
-        
         # Encode the query
         query_embedding = self.model.encode(query, convert_to_tensor=False)
+        query_vector = query_embedding.tolist()
         
-        # Calculate similarities
-        similarities = []
-        for faq_id, faq_data in self.faq_cache.items():
-            similarity = self._cosine_similarity(
-                query_embedding,
-                faq_data['embedding']
-            )
-            similarities.append((faq_id, similarity))
+        # Use pgvector's <=> operator for cosine distance
+        # Lower distance = more similar
+        sql = text("""
+            SELECT id, question, answer, category,
+                   embedding <=> :query_embedding AS distance
+            FROM faqs
+            WHERE embedding IS NOT NULL
+            ORDER BY embedding <=> :query_embedding
+            LIMIT :limit
+        """)
         
-        # Sort by similarity and get top-k
-        similarities.sort(key=lambda x: x[1], reverse=True)
-        top_faq_ids = [faq_id for faq_id, _ in similarities[:top_k]]
+        result = db.execute(
+            sql,
+            {"query_embedding": str(query_vector), "limit": top_k}
+        ).fetchall()
         
-        # Return top FAQs
-        relevant_faqs = [
-            self.faq_cache[faq_id]['data']
-            for faq_id in top_faq_ids
-            if similarities[0][1] > 0.3  # Only return if similarity > threshold
-        ]
+        # Convert to list of dicts, filter by similarity threshold
+        relevant_faqs = []
+        for row in result:
+            # cosine distance < 0.5 means good similarity (threshold adjustable)
+            if row.distance < 0.5:
+                relevant_faqs.append({
+                    'id': row.id,
+                    'question': row.question,
+                    'answer': row.answer,
+                    'category': row.category
+                })
         
         return relevant_faqs
     
-    def _build_faq_cache(self, faqs: List[FAQ]):
-        """Build cache of FAQ embeddings"""
+    def generate_and_store_embeddings(self, db: Session):
+        """
+        Generate embeddings for all FAQs that don't have them
+        Call this after adding new FAQs
+        """
+        # Get FAQs without embeddings
+        faqs = db.query(FAQ).filter(FAQ.embedding == None).all()
+        
+        if not faqs:
+            print("✅ All FAQs already have embeddings")
+            return
+        
+        print(f"🔄 Generating embeddings for {len(faqs)} FAQs...")
+        
         for faq in faqs:
-            # Combine question and answer for better matching
+            # Combine question and answer for better semantic matching
             text = f"{faq.question} {faq.answer}"
             embedding = self.model.encode(text, convert_to_tensor=False)
             
-            self.faq_cache[faq.id] = {
-                'embedding': embedding,
-                'data': {
-                    'id': faq.id,
-                    'question': faq.question,
-                    'answer': faq.answer,
-                    'category': faq.category
-                }
-            }
-    
-    def refresh_cache(self, db: Session):
-        """Refresh FAQ cache (call when FAQs are updated)"""
-        self.faq_cache = {}
-        faqs = db.query(FAQ).all()
-        self._build_faq_cache(faqs)
-    
-    @staticmethod
-    def _cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
-        """Calculate cosine similarity between two vectors"""
-        return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
+            # Store as list (pgvector will handle conversion)
+            faq.embedding = embedding.tolist()
+        
+        db.commit()
+        print(f"✅ Generated and stored {len(faqs)} embeddings")
 
 
 # Global instance

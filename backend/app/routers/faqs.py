@@ -23,8 +23,8 @@ def create_faq(request: FAQCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(faq)
     
-    # Refresh FAQ cache
-    faq_service.refresh_cache(db)
+    # Generate embedding for the new FAQ
+    faq_service.generate_and_store_embeddings(db)
     
     return FAQResponse.model_validate(faq)
 
@@ -75,11 +75,14 @@ def update_faq(
     if update.category:
         faq.category = update.category
     
+    # Clear embedding so it gets regenerated
+    faq.embedding = None
+    
     db.commit()
     db.refresh(faq)
     
-    # Refresh FAQ cache
-    faq_service.refresh_cache(db)
+    # Regenerate embedding
+    faq_service.generate_and_store_embeddings(db)
     
     return FAQResponse.model_validate(faq)
 
@@ -93,8 +96,5 @@ def delete_faq(faq_id: int, db: Session = Depends(get_db)):
     
     db.delete(faq)
     db.commit()
-    
-    # Refresh FAQ cache
-    faq_service.refresh_cache(db)
     
     return {"message": "FAQ deleted successfully"}

@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
-from app.database import init_db
+from app.database import init_db, SessionLocal
 from app.routers import chat, sessions, faqs, escalations
 import json
 from pathlib import Path
@@ -43,6 +43,14 @@ async def startup_event():
     
     # Load FAQs from JSON file
     load_initial_faqs()
+    
+    # Generate embeddings for FAQs
+    from app.services.faq_service import faq_service
+    db = SessionLocal()
+    try:
+        faq_service.generate_and_store_embeddings(db)
+    finally:
+        db.close()
     
     print("✅ Application started successfully!")
 

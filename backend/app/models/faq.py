@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text
+from pgvector.sqlalchemy import Vector
 from app.database import Base
 
 
@@ -10,6 +11,7 @@ class FAQ(Base):
     question = Column(Text, nullable=False)
     answer = Column(Text, nullable=False)
     category = Column(String, nullable=True)
+    embedding = Column(Vector(384), nullable=True)  # 384-dim for all-MiniLM-L6-v2
     
     def __repr__(self):
         return f"<FAQ(id={self.id}, category={self.category})>"
