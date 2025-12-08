@@ -124,7 +124,19 @@ cd ../frontend
 pip install -r requirements.txt
 ```
 
-4. **Initialize database and load FAQs**
+4. **Enable pgvector extension in Supabase**
+
+Before running the migration, enable the pgvector extension:
+
+1. Go to your Supabase project dashboard
+2. Navigate to **Database** → **Extensions**
+3. Search for "vector" and enable the **pgvector** extension
+4. Or run this SQL in the SQL Editor:
+   ```sql
+   CREATE EXTENSION IF NOT EXISTS vector;
+   ```
+
+5. **Initialize database and load FAQs**
 
 ```bash
 cd backend
@@ -132,16 +144,14 @@ cd backend
 # Create database tables
 python setup_db.py
 
-# Enable pgvector extension and migrate
+# Migrate to pgvector (adds embedding column)
 python migrate_pgvector.py
 
 # Load 50 FAQs with embeddings
 python reload_faqs.py
 ```
 
-**Note:** Make sure your Supabase project has the `pgvector` extension enabled (Settings → Database → Extensions).
-
-5. **Run the application**
+6. **Run the application**
 
 ```bash
 # Terminal 1 - Start Backend
@@ -155,7 +165,7 @@ python app.py
 # Frontend will run on http://localhost:7860
 ```
 
-6. **Access the application**
+7. **Access the application**
 - Frontend UI: http://localhost:7860
 - Backend API: http://localhost:8000
 - API Docs: http://localhost:8000/docs
