@@ -43,9 +43,13 @@ class EscalationService:
         if repeated_count >= 3:
             return True, f"User asked similar question {repeated_count} times"
         
-        # Check 4: Very short or unhelpful response
-        if len(assistant_response.split()) < 5:
-            return True, "Response too brief, may be unhelpful"
+        # Check 4: Very short or unhelpful response (adjusted threshold)
+        # Exclude escalation notice from word count
+        response_without_notice = assistant_response.replace("[This conversation has been escalated to a human agent who will assist you shortly.]", "").strip()
+        word_count = len(response_without_notice.split())
+        
+        if word_count < 10 and "?" in user_message:  # Short response to a question
+            return True, f"Response too brief ({word_count} words), may be unhelpful"
         
         return False, ""
     

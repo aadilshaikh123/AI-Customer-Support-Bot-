@@ -16,7 +16,7 @@ Guidelines:
 - If the question is completely outside your knowledge, say so clearly
 - Don't make promises about features or policies you're not certain about
 
-If you cannot answer a question confidently or it requires specialized knowledge, indicate this clearly and the query will be escalated to a human agent."""
+IMPORTANT: If a user asks to speak with a human, manager, or agent, respond briefly (1 sentence) acknowledging their request. Do NOT explain the escalation process - the system handles that automatically."""
 
 
 def build_context_prompt(conversation_history: list, relevant_faqs: list, user_message: str) -> list:
@@ -75,12 +75,14 @@ def build_summarization_prompt(conversation_history: list) -> str:
 Summary:"""
 
 
-# Escalation trigger keywords
+# Escalation trigger keywords (expanded)
 ESCALATION_KEYWORDS = [
     "speak to human",
     "talk to human",
     "human agent",
     "real person",
+    "actual person",
+    "live person",
     "manager",
     "supervisor",
     "escalate",
@@ -88,6 +90,17 @@ ESCALATION_KEYWORDS = [
     "this isn't working",
     "frustrated",
     "angry",
+    "speak with someone",
+    "talk to someone",
+    "connect me to",
+    "transfer me to",
+    "representative",
+    "support person",
+    "customer service",
+    "live chat",
+    "human help",
+    "real help",
+    "actual help",
 ]
 
 # Low confidence indicators in responses

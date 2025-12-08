@@ -88,5 +88,215 @@
     "question": "What happens if I miss a payment?",
     "answer": "If a payment fails, we'll retry 3 times over 7 days and send email reminders. If all retries fail, your account is suspended until payment is updated. No data is deleted during suspension.",
     "category": "billing"
+  },
+  {
+    "id": 16,
+    "question": "Can I export my data?",
+    "answer": "Yes! Go to Settings > Privacy > Export Data. We'll email you a downloadable ZIP file containing all your data within 48 hours. This includes profile info, messages, and transaction history in JSON format.",
+    "category": "account"
+  },
+  {
+    "id": 17,
+    "question": "How do I enable two-factor authentication?",
+    "answer": "To enable 2FA: 1) Go to Security Settings, 2) Click 'Enable Two-Factor Auth', 3) Scan QR code with your authenticator app (Google Authenticator, Authy), 4) Enter verification code. Save backup codes in a secure location.",
+    "category": "security"
+  },
+  {
+    "id": 18,
+    "question": "What's the difference between plans?",
+    "answer": "Basic ($9/mo): 5 projects, 1GB storage. Pro ($29/mo): Unlimited projects, 50GB storage, priority support. Enterprise (custom): Unlimited everything, dedicated support, SLA guarantee. All plans include core features.",
+    "category": "pricing"
+  },
+  {
+    "id": 19,
+    "question": "How do I invite team members?",
+    "answer": "To invite team members: 1) Go to Team Settings, 2) Click 'Invite Member', 3) Enter their email, 4) Set role (Admin/Member/Viewer), 5) Send invite. They'll receive an email to join. Pro plan required for teams.",
+    "category": "account"
+  },
+  {
+    "id": 20,
+    "question": "Can I pause my subscription?",
+    "answer": "Yes! You can pause for up to 3 months. Go to Billing > Pause Subscription. Your data is preserved, but access is disabled during pause. Resume anytime without losing settings or data.",
+    "category": "billing"
+  },
+  {
+    "id": 21,
+    "question": "How do I report a bug?",
+    "answer": "Report bugs via: 1) In-app bug reporter (Help > Report Bug), 2) Email bugs@example.com with screenshots, 3) GitHub issues for open-source components. Include steps to reproduce and your browser/device info.",
+    "category": "technical"
+  },
+  {
+    "id": 22,
+    "question": "Do you offer API access?",
+    "answer": "Yes! API access is available on Pro and Enterprise plans. Get your API key from Developer Settings. Documentation at docs.example.com/api. Rate limits: 1000 requests/hour (Pro), unlimited (Enterprise).",
+    "category": "technical"
+  },
+  {
+    "id": 23,
+    "question": "How do I integrate with Slack?",
+    "answer": "To integrate Slack: 1) Go to Integrations > Slack, 2) Click 'Connect', 3) Authorize in Slack workspace, 4) Choose channels for notifications. You'll get real-time alerts for important events.",
+    "category": "integrations"
+  },
+  {
+    "id": 24,
+    "question": "What browsers do you support?",
+    "answer": "We support the latest versions of Chrome, Firefox, Safari, and Edge. For best experience, keep your browser updated. Internet Explorer is not supported. Mobile browsers work on iOS 13+ and Android 8+.",
+    "category": "technical"
+  },
+  {
+    "id": 25,
+    "question": "How do I get an invoice?",
+    "answer": "Invoices are auto-emailed after each payment. To download past invoices: 1) Go to Billing > Invoice History, 2) Click invoice to download PDF. Invoices include tax info and payment details.",
+    "category": "billing"
+  },
+  {
+    "id": 26,
+    "question": "Can I customize my subdomain?",
+    "answer": "Yes, on Pro+ plans! Go to Settings > Custom Domain. Choose your subdomain (yourname.example.com) or use your own domain with CNAME setup. Changes take up to 24 hours to propagate.",
+    "category": "account"
+  },
+  {
+    "id": 27,
+    "question": "How do I restore deleted items?",
+    "answer": "Deleted items go to Trash for 30 days. Go to Trash, select items, click 'Restore'. After 30 days, items are permanently deleted. Pro users get 90-day retention. Enterprise can request custom retention.",
+    "category": "account"
+  },
+  {
+    "id": 28,
+    "question": "What's your uptime guarantee?",
+    "answer": "We guarantee 99.9% uptime on Pro and Enterprise plans (monitored at status.example.com). Scheduled maintenance is announced 48 hours in advance. Enterprise SLA includes compensation for downtime exceeding guarantee.",
+    "category": "general"
+  },
+  {
+    "id": 29,
+    "question": "How do I change my username?",
+    "answer": "To change username: 1) Go to Profile Settings, 2) Click 'Edit Username', 3) Enter new username (alphanumeric, 3-20 chars), 4) Confirm. Username changes are limited to once per 30 days.",
+    "category": "account"
+  },
+  {
+    "id": 30,
+    "question": "Do you offer enterprise SSO?",
+    "answer": "Yes! Enterprise plans support SAML 2.0 SSO with providers like Okta, Azure AD, and OneLogin. Contact sales for setup. SSO includes centralized user management, MFA enforcement, and audit logs.",
+    "category": "security"
+  },
+  {
+    "id": 31,
+    "question": "How do I import data from competitors?",
+    "answer": "We support imports from major competitors. Go to Settings > Import Data, select source platform, upload export file (CSV/JSON). Our migration team can assist Enterprise customers with large imports.",
+    "category": "technical"
+  },
+  {
+    "id": 32,
+    "question": "Can I schedule automated reports?",
+    "answer": "Yes, on Pro+ plans. Go to Reports > Schedule, choose frequency (daily/weekly/monthly), select metrics, add recipients. Reports are emailed as PDF or Excel. Custom reports available for Enterprise.",
+    "category": "features"
+  },
+  {
+    "id": 33,
+    "question": "What's your data retention policy?",
+    "answer": "Active accounts: Data retained indefinitely. Cancelled accounts: Data kept for 90 days then deleted. Enterprise can request custom retention (1-7 years). Backups retained for 30 days for disaster recovery.",
+    "category": "security"
+  },
+  {
+    "id": 34,
+    "question": "How do I enable dark mode?",
+    "answer": "Click your profile icon > Settings > Appearance > Dark Mode. Options: Light, Dark, or Auto (follows system). Dark mode reduces eye strain and saves battery on OLED screens.",
+    "category": "general"
+  },
+  {
+    "id": 35,
+    "question": "Can I use this offline?",
+    "answer": "Limited offline support via our mobile apps. View cached data and make changes; they'll sync when reconnected. Real-time features require internet. Progressive Web App (PWA) coming soon for better offline.",
+    "category": "technical"
+  },
+  {
+    "id": 36,
+    "question": "How do I bulk upload files?",
+    "answer": "Drag and drop up to 100 files at once, or use Upload > Bulk Upload. Supported formats: PDF, DOC, XLS, PNG, JPG. Max 50MB per file. Pro users get 500MB, Enterprise unlimited.",
+    "category": "features"
+  },
+  {
+    "id": 37,
+    "question": "What languages do you support?",
+    "answer": "Currently available in English, Spanish, French, German, Japanese, and Portuguese. Change language in Settings > Language. More languages coming Q2 2026. API responses always in JSON.",
+    "category": "general"
+  },
+  {
+    "id": 38,
+    "question": "How do I set up webhooks?",
+    "answer": "Pro+ feature. Go to Developer Settings > Webhooks > Add Endpoint. Enter URL, select events (user.created, order.completed, etc.), save. Test with sample payload. Includes retry logic and delivery logs.",
+    "category": "technical"
+  },
+  {
+    "id": 39,
+    "question": "Can I white-label the platform?",
+    "answer": "Enterprise only. Remove our branding, add your logo/colors, custom domain, custom email templates. White-label addon is $500/month. Includes dedicated onboarding and design consultation.",
+    "category": "enterprise"
+  },
+  {
+    "id": 40,
+    "question": "How do I get priority support?",
+    "answer": "Included with Pro ($29/mo) and Enterprise plans. Benefits: <2 hour response time, dedicated Slack channel, video call support, phone support. Basic plan has 24-hour email response.",
+    "category": "general"
+  },
+  {
+    "id": 41,
+    "question": "What's your compliance certification?",
+    "answer": "We're SOC 2 Type II certified, GDPR and CCPA compliant, HIPAA available for Enterprise. Annual audits by third parties. Compliance docs available in Trust Center at trust.example.com.",
+    "category": "security"
+  },
+  {
+    "id": 42,
+    "question": "How do I collaborate in real-time?",
+    "answer": "Open any document, share link with team. Changes sync instantly with presence indicators showing who's online. Comments and mentions notify collaborators. Works like Google Docs.",
+    "category": "features"
+  },
+  {
+    "id": 43,
+    "question": "Can I automate workflows?",
+    "answer": "Yes! Use our automation builder: Settings > Automations > Create. Triggers (form submit, status change) + Actions (send email, create task). Zapier integration available for 3000+ apps.",
+    "category": "features"
+  },
+  {
+    "id": 44,
+    "question": "How do I request a feature?",
+    "answer": "Submit ideas at feedback.example.com or in-app via Help > Feature Request. Upvote existing requests. We review monthly and prioritize based on votes. Roadmap publicly visible.",
+    "category": "general"
+  },
+  {
+    "id": 45,
+    "question": "What happens to my data if I cancel?",
+    "answer": "You have 90 days to export your data after cancellation. After 90 days, all data is permanently deleted and cannot be recovered. Export early to avoid data loss!",
+    "category": "billing"
+  },
+  {
+    "id": 46,
+    "question": "How do I enable email notifications?",
+    "answer": "Go to Settings > Notifications. Choose what to receive: mentions, updates, digests. Set frequency (instant, hourly, daily). Unsubscribe links in every email. Mobile push available via app.",
+    "category": "account"
+  },
+  {
+    "id": 47,
+    "question": "Can I transfer ownership of my account?",
+    "answer": "Yes. Go to Account Settings > Transfer Ownership, enter new owner's email, confirm. They must accept within 7 days. Transfers billing responsibility and admin access. Irreversible once accepted.",
+    "category": "account"
+  },
+  {
+    "id": 48,
+    "question": "How do I use keyboard shortcuts?",
+    "answer": "Press '?' to see all shortcuts. Common ones: Ctrl+K (search), Ctrl+N (new), Ctrl+S (save), Ctrl+/ (help). Customize in Settings > Keyboard. Shortcuts work across web and desktop apps.",
+    "category": "general"
+  },
+  {
+    "id": 49,
+    "question": "What's your fair use policy?",
+    "answer": "Unlimited plans have fair use limits: 10TB bandwidth, 1M API calls/month, 100 concurrent users. Excessive use may prompt upgrade suggestion. Enterprise has no caps. Contact sales for clarification.",
+    "category": "pricing"
+  },
+  {
+    "id": 50,
+    "question": "How do I get a demo for my team?",
+    "answer": "Book a personalized demo at example.com/demo or email sales@example.com. 30-minute session covers your use case, Q&A, and trial setup. Enterprise demos include custom solution architecture.",
+    "category": "general"
   }
 ]

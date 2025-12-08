@@ -42,6 +42,37 @@ def send_message(request: ChatRequest, db: Session = Depends(get_db)):
     # Save user message
     context_manager.save_message(session_id, "user", request.message, db)
     
+    # Pre-check for escalation keywords (immediate escalation)
+    from app.utils.prompts import ESCALATION_KEYWORDS
+    message_lower = request.message.lower()
+    keyword_match = None
+    for keyword in ESCALATION_KEYWORDS:
+        if keyword in message_lower:
+            keyword_match = keyword
+            break
+    
+    # If keyword found, provide brief response and escalate immediately
+    if keyword_match:
+        response_text = "I understand you'd like to speak with a human representative. Let me connect you right away."
+        confidence_score = 0.85
+        
+        # Create escalation
+        escalation_reason = f"User requested human assistance (keyword: '{keyword_match}')"
+        escalation_service.create_escalation(session_id, escalation_reason, db)
+        response_text += "\n\n[This conversation has been escalated to a human agent who will assist you shortly.]"
+        
+        # Save assistant message
+        context_manager.save_message(session_id, "assistant", response_text, db, confidence_score)
+        
+        return ChatResponse(
+            session_id=session_id,
+            message=response_text,
+            confidence_score=confidence_score,
+            escalated=True,
+            escalation_reason=escalation_reason,
+            timestamp=datetime.utcnow()
+        )
+    
     # Get conversation history
     history = context_manager.get_conversation_history(session_id, db)
     
