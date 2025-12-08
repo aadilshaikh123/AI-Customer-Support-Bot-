@@ -22,18 +22,25 @@ An intelligent customer support chatbot with contextual memory, FAQ retrieval, a
 
 ## 🏛️ Architecture
 
-![alt text](image.png)
+![Architecture Diagram](image.png)
 
-### Request Flow
+### Chat Flow Diagram (v2.1)
+
+![Chat Flow Diagram](image2.png)
+
+*Detailed flowchart showing the complete message processing pipeline including pre-LLM keyword detection, pgvector semantic search, and 4 escalation triggers.*
+
+### Request Flow Summary
 1. User sends message via Gradio
 2. Frontend calls `/api/chat` endpoint
-3. Backend retrieves conversation history from DB
-4. Semantic search finds relevant FAQs
-5. Builds context prompt with history + FAQs
-6. Calls Groq API for response
-7. Checks escalation triggers
-8. Saves message to DB
-9. Returns response to user
+3. **Pre-LLM keyword check** (v2.1) - Immediate escalation for 24 trigger phrases
+4. Backend retrieves conversation history from DB (last 10 messages)
+5. **Semantic search** finds relevant FAQs using pgvector (384-dim embeddings)
+6. Builds context prompt with system prompt + FAQs + history + query
+7. Calls Groq API (Llama 3.3 70B Versatile) for response
+8. **Checks 4 escalation triggers**: Low confidence (<0.7), Repeated questions (3+), Brief responses (<10 words)
+9. Saves message to DB with confidence score
+10. Returns response to user with escalation status
 
 ## 📁 Project Structure
 
@@ -79,7 +86,6 @@ csupportbot/
 1. **Clone the repository**
 ```bash
 git clone <your-repo-url>
-cd csupportbot
 ```
 
 2. **Set up environment variables**
@@ -166,7 +172,6 @@ cd backend
 python -m app.main
 
 # In a new terminal, run tests
-cd csupportbot
 python test_memory_escalation.py
 ```
 
