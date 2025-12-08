@@ -262,7 +262,7 @@ The bot escalates through multiple triggers with **100% keyword detection accura
 
 ## 🎬 Demo Video
 
-[Link to demo video showcasing:]
+Link to demo video showcasing:https://drive.google.com/file/d/12Twfg7q5K3CQwFsMtSHGuPRvHammiBkz/view?usp=sharing
 - FAQ handling
 - Contextual conversation
 - Escalation scenario
